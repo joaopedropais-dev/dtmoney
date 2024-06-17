@@ -3,6 +3,10 @@ import ReactDOM from "react-dom/client";
 import { createServer, Model } from "miragejs";
 import { App } from "./App";
 
+import "moment/locale/pt-br";
+import moment from "moment";
+moment.locale("pt-br");
+
 createServer({
   models: {
     transaction: Model,
@@ -15,17 +19,17 @@ createServer({
           id: 1,
           title: "Freelance website",
           type: "deposit",
-          category: "dev",
-          amount: "1000",
+          category: "Dev",
+          amount: 1000,
           createdAt: new Date("2024-06-12 13:00:00"),
         },
         {
-          id: 1,
+          id: 2,
           title: "Aluguel",
           type: "withdraw",
           category: "Casa",
-          amount: "1200",
-          createdAT: new Date("2024-07-14 17:00:00"),
+          amount: 1200,
+          createdAt: new Date("2024-07-14 17:00:00"),
         },
       ],
     });

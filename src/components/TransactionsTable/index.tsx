@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { api } from "../../services/api";
 import { Container } from "./styles";
+import { CurrencyFormatter } from "../../utils/currency-formatter";
+import moment from "moment";
 
 interface transaction {
   id: number;
@@ -8,7 +10,7 @@ interface transaction {
   amount: number;
   type: string;
   category: string;
-  createdAt: string;
+  createdAt: Date;
 }
 
 export function TransactionsTable() {
@@ -37,12 +39,14 @@ export function TransactionsTable() {
             <tr key={transaction.id}>
               <td>{transaction.title}</td>
               <td className={transaction.type}>
-                {new Intl.NumberFormat("pt-BR", {
-                  style: "curency",
-                }).format(500)}
+                {CurrencyFormatter.format(transaction.amount)}
               </td>
               <td>{transaction.category}</td>
-              <td>{transaction.createdAt}</td>
+              <td>
+                {moment(transaction.createdAt).format(
+                  " DD [de] MMMM [de] YYYY [às] h:mm A"
+                )}
+              </td>
             </tr>
           ))}
         </tbody>
