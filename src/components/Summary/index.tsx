@@ -1,16 +1,22 @@
-import totalImag from '../../assets/money.svg'
-import spendingImg from '../../assets/seta-baixo.svg'
-import  incomeImg from '../../assets/seta-cima.svg' 
+import { useContext } from "react";
+import totalImag from "../../assets/money.svg";
+import spendingImg from "../../assets/seta-baixo.svg";
+import incomeImg from "../../assets/seta-cima.svg";
+import { TransactionsContext } from "../../TransactionsContext";
 
-import { Container } from './styles'
+import { Container } from "./styles";
 
 export function Summary() {
+  const transactions = useContext(TransactionsContext);
+
+  console.log(transactions);
+
   return (
     <Container>
       <div>
         <header>
           <p>entradas</p>
-          <img src={incomeImg} alt="Entradas" />            
+          <img src={incomeImg} alt="Entradas" />
         </header>
         <strong>R$5.000,00</strong>
       </div>
@@ -18,7 +24,7 @@ export function Summary() {
       <div>
         <header>
           <p>Saídas</p>
-          <img src={spendingImg} alt="Saídas" />            
+          <img src={spendingImg} alt="Saídas" />
         </header>
         <strong>- R$800,00</strong>
       </div>
@@ -26,10 +32,10 @@ export function Summary() {
       <div className="highlight-background">
         <header>
           <p>Total</p>
-          <img src={totalImag} alt="Total" />            
+          <img src={totalImag} alt="Total" />
         </header>
         <strong>R$4.200,00</strong>
       </div>
     </Container>
-  )
+  );
 }
