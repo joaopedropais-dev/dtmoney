@@ -1,11 +1,12 @@
-import Modal from "react-modal";
-import incomeImg from "../../assets/seta-cima.svg";
-import spendingImg from "../../assets/seta-baixo.svg";
-import ExitIcon from "../../assets/Exit.svg";
 import { FormEvent, useState } from "react";
-import { Container, TransactionTypeContainer } from "./styles";
+import Modal from "react-modal";
 import { RadioBox } from "./components/RadioBox";
-import { api } from "../../services/api";
+import { useTransations } from "../../hooks/useTransactions";
+import spendingImg from "../../assets/seta-baixo.svg";
+import incomeImg from "../../assets/seta-cima.svg";
+import ExitIcon from "../../assets/Exit.svg";
+
+import { Container, TransactionTypeContainer } from "./styles";
 
 interface NewTransactionModalProps {
   isOpen: boolean;
@@ -15,22 +16,22 @@ export function NewTransactionModal({
   isOpen,
   onRequestClose,
 }: NewTransactionModalProps) {
+  const { createTransaction } = useTransations();
+
   const [title, setTitle] = useState("");
-  const [value, setValue] = useState("0");
+  const [amount, setAmount] = useState("0");
   const [category, setCategory] = useState("");
   const [type, setType] = useState("Deposit");
 
   function handleCreateNewTransaction(event: FormEvent) {
     event.preventDefault();
 
-    const data = {
+    createTransaction({
       title,
-      value,
+      amount: Number(amount),
       category,
       type,
-    };
-
-    api.post("/transactions", data);
+    });
   }
 
   return (
@@ -58,10 +59,10 @@ export function NewTransactionModal({
         />
 
         <input
-          type="Number"
+          type="number"
           placeholder="Valor"
-          value={value}
-          onChange={(event) => setValue(event.target.value)}
+          value={amount}
+          onChange={(event) => setAmount(event.target.value)}
         />
 
         <TransactionTypeContainer>
